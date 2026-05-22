@@ -1,3 +1,8 @@
+using ClassLibrary1.DAL.Repositories.Classes;
+using ClassLibrary1.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1mvc1.DbContexts;
+
 namespace WebApplication1mvc1
 {
     public class Program
@@ -8,6 +13,12 @@ namespace WebApplication1mvc1
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+            builder.Services.AddDbContext<GymDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+                
 
             var app = builder.Build();
 
@@ -31,6 +42,11 @@ namespace WebApplication1mvc1
                 .WithStaticAssets();
 
             app.Run();
+        }
+
+        private static int PlanRepository()
+        {
+            throw new NotImplementedException();
         }
     }
 }
